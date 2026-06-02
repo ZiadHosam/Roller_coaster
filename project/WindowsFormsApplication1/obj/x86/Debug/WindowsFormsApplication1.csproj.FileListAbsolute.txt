@@ -1,0 +1,43 @@
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+c:\users\msa\documents\visual studio 2010\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+E:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Sam\Graphics_1\Me\Lec_3_Curve_New\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+E:\Sam\Graphics_1\Me\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.AssemblyReference.cache
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+D:\Study\semester 6\graphics\code\proj\Lec_3\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.AssemblyReference.cache
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+D:\Study\semester 6\graphics\code\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
