@@ -344,8 +344,9 @@ namespace WindowsFormsApplication1
             {
                 if (Parts.Count != 0)
                 {
-                    car.x = PntXreset;
-                    car.y = PntYreset - car.h;
+                    //car.x = PntXreset;
+                    //car.y = PntYreset - car.h;
+                    car.currline = 0;
                     flagstart = 1;
                     for (int i = 0; i < Parts.Count; i++)
                     {
