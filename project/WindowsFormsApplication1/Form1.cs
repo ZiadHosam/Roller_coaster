@@ -34,8 +34,8 @@ namespace WindowsFormsApplication1
         float CurrPntX, PntXreset;
         float CurrPntY, PntYreset;
         int DefaultLineLen;
-        int flag = 0, scroll_flag = 0, flagstart = 0;
-        int Xshow, Yshow, Xold, Yold, offW, offH;
+        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0;
+        int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         PointF carPoint;
@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
             this.MouseMove += new MouseEventHandler(Form1_MouseMove);
             this.MouseUp += Form1_MouseUp;
             tt.Tick += Tt_Tick;
-            //tt.Start();
+            tt.Start();
         }
 
         private void Tt_Tick(object sender, EventArgs e)
@@ -93,6 +93,10 @@ namespace WindowsFormsApplication1
                 }
 
             }
+            if(ftest == 1)
+            {
+                Yshow += scrollSpeed;
+            }
             //count++;
             DrawDubb(this.CreateGraphics());
         }
@@ -107,6 +111,7 @@ namespace WindowsFormsApplication1
 
             Xshow = 0;
             Yshow = -ClientSize.Height;
+            scrollSpeed = 20;
             PntXreset = 0;
             PntYreset = (int)(ClientSize.Height * 1.5);
             CurrPntX = PntXreset;
@@ -136,7 +141,29 @@ namespace WindowsFormsApplication1
                     else
                         flag = 0;
                     break;
-                //case Keys.W:
+                case Keys.W:
+                    if (scroll_flag == 1)
+                        return;
+                    Yshow += scrollSpeed;
+                    break;
+                case Keys.S:
+                    if (scroll_flag == 1)
+                        return;
+
+                    if (Yshow - scrollSpeed >= -ClientSize.Height)
+                        Yshow -= scrollSpeed;
+                    break;
+                case Keys.A:
+                    if (scroll_flag == 1)
+                        return;
+                    if (Xshow + scrollSpeed <= 0)
+                        Xshow += scrollSpeed;
+                    break;
+                case Keys.D:
+                    if (scroll_flag == 1)
+                        return;
+                    Xshow -= scrollSpeed;
+                    break;
 
             }
             if (e.KeyCode == Keys.Right)
@@ -223,7 +250,7 @@ namespace WindowsFormsApplication1
                     update_line(L.Xend, L.Yend);
                 }
             }
-            if (e.KeyCode == Keys.S)
+            if (e.KeyCode == Keys.F)
             {
                 if (Lines.Count != 0)
                 {
