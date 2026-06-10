@@ -31,10 +31,11 @@ namespace WindowsFormsApplication1
     }
     public partial class Form1 : Form
     {
-        float CurrPntX = 0;
-        float CurrPntY = 0;
-        int flag = 0, scroll_flag = 0;
-        int Xshow, Yshow, Xold, Yold;
+        float CurrPntX, PntXreset;
+        float CurrPntY, PntYreset;
+        int DefaultLineLen;
+        int flag = 0, scroll_flag = 0, flagstart = 0;
+        int Xshow, Yshow, Xold, Yold, offW, offH;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         PointF carPoint;
@@ -58,7 +59,7 @@ namespace WindowsFormsApplication1
             this.MouseMove += new MouseEventHandler(Form1_MouseMove);
             this.MouseUp += Form1_MouseUp;
             tt.Tick += Tt_Tick;
-            tt.Start();
+            //tt.Start();
         }
 
         private void Tt_Tick(object sender, EventArgs e)
@@ -98,12 +99,19 @@ namespace WindowsFormsApplication1
 
         void Form1_Load(object sender, EventArgs e)
         {
-            off = new Bitmap(this.ClientSize.Width * 2, this.ClientSize.Height * 2);
+            offW = ClientSize.Width * 2;
+            offH = ClientSize.Height * 2;
+            off = new Bitmap(offW, offH);
             background = new Bitmap("bg3.jpg");
+            car.img = new Bitmap("bg4.jpg");
+
             Xshow = 0;
             Yshow = -ClientSize.Height;
-
-            car.img = new Bitmap("bg4.jpg");
+            PntXreset = 0;
+            PntYreset = (int)(ClientSize.Height * 1.5);
+            CurrPntX = PntXreset;
+            CurrPntY = PntYreset;
+            DefaultLineLen = 100;
         }
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -129,24 +137,15 @@ namespace WindowsFormsApplication1
             if (e.KeyCode == Keys.Right)
             {
                 DDA ptrav = new DDA();
-                if (Lines.Count != 0)
-                {
-                    ptrav.Xst = Lines[Lines.Count - 1].Xend;
-                    ptrav.Xend = Lines[Lines.Count - 1].Xend + 100;
-                    ptrav.Yst = Lines[Lines.Count - 1].Yend;
-                    ptrav.Yend = Lines[Lines.Count - 1].Yend;
-                }
-                else
-                {
-                    ptrav.Xst = 0;
-                    ptrav.Xend = 100;
-                    ptrav.Yst = ClientSize.Height / 2;
-                    ptrav.Yend = ClientSize.Height / 2;
-                }
+                
+                ptrav.Xst = CurrPntX;
+                ptrav.Xend = CurrPntX + DefaultLineLen;
+                ptrav.Yst = CurrPntY;
+                ptrav.Yend = CurrPntY;
 
                 Lines.Add(ptrav);
                 CurrPntX = Lines[Lines.Count - 1].Xend;
-                CurrPntY = Lines[Lines.Count - 1].Yend;
+                //CurrPntY = Lines[Lines.Count - 1].Yend;
             }
             if (e.KeyCode == Keys.Left)
             {
@@ -161,8 +160,8 @@ namespace WindowsFormsApplication1
                     }
                     else
                     {
-                        CurrPntX = 0;
-                        CurrPntY = 0;
+                        CurrPntX = PntXreset;
+                        CurrPntY = PntYreset;
                     }
                 }
             }
@@ -298,7 +297,8 @@ namespace WindowsFormsApplication1
 
         private void DrawScene(Graphics g)
         {
-            g.Clear(Color.White);
+            g.Clear(Color.Black);
+            //g.Clear(Color.White);
 
             g.DrawImage(background, 0, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
             g.DrawImage(background, ClientSize.Width, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
