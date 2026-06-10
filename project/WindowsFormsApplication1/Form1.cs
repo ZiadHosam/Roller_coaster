@@ -188,6 +188,15 @@ namespace WindowsFormsApplication1
                         return;
                     Xshow -= scrollSpeed;
                     break;
+                case Keys.D3:
+                    part p = new part();
+                    p.i = 2;
+                    p.curve = create_curve();
+                    Parts.Add(p);
+                    int x = p.curve.ControlPoints[2].X;
+                    int y = p.curve.ControlPoints[2].Y;
+                    update_line(x, y);
+                    break;
 
             }
             if (e.KeyCode == Keys.Right)
@@ -308,7 +317,14 @@ namespace WindowsFormsApplication1
         }
 
 
-
+        private BezierCurve create_curve()
+        {
+            BezierCurve c = new BezierCurve();
+            c.SetControlPoint(new Point((int)CurrPntX, (int)CurrPntY));
+            c.SetControlPoint(new Point((int)CurrPntX + (DefaultLineLen/2), (int)CurrPntY - (DefaultLineLen/2)));
+            c.SetControlPoint(new Point((int)CurrPntX + DefaultLineLen, (int)CurrPntY));
+            return c;
+        }
 
 
         private void Form1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -389,6 +405,15 @@ namespace WindowsFormsApplication1
                 {
                     DDA l = Parts[i].line;
                     g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
+                }
+                else if (Parts[i].i == 1)
+                {
+
+                }
+                else if (Parts[i].i == 2)
+                {
+                    BezierCurve c = Parts[i].curve;
+                    c.DrawCurve(g);
                 }
             }
             for (int i = 0; i < Circles.Count; i++)
