@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
                     else
                         flag = 0;
                     break;
-                case Keys.W:
+                //case Keys.W:
 
             }
             if (e.KeyCode == Keys.Right)
