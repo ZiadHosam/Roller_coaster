@@ -9,6 +9,24 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
+    public abstract class type {
+        public int i;
+    }
+
+    public class part : type
+    {
+        public int i;
+        public DDA line;
+        public Circle circ;
+        public BezierCurve curve;
+        public void CalcNextPoint()
+        {
+            if(i == 0)
+            {
+                line.CalcNextPoint();
+            }
+        }
+    }
     public class LineSegment
     {
         public PointF ptS, ptE;
@@ -46,7 +64,8 @@ namespace WindowsFormsApplication1
         Timer tt = new Timer();
 
         Ccar car = new Ccar();
-        List<DDA> Lines = new List<DDA>();
+        List<part> Parts = new List<part>();
+        //List<part> Lines = new List<part>();
         List<Circle> Circles = new List<Circle>();
         public Form1()
         {
@@ -66,30 +85,35 @@ namespace WindowsFormsApplication1
         {
             if (flagstart == 1)
             {
-                Lines[car.currline].CalcNextPoint();
 
-                car.x = Lines[car.currline].cx - car.w;
-                car.y = Lines[car.currline].cy - car.h;
-
-                if (!Lines[car.currline].travel)
+                if (Parts[car.currline].i == 0)
                 {
-                    car.currline++;
+                    DDA l = Parts[car.currline].line;
+                    l.CalcNextPoint();
 
-                    if (car.currline >= Lines.Count)
-                    {
-                        flagstart = 0;
-                    }
-                }
+                    car.x = l.cx - car.w;
+                    car.y = l.cy - car.h;
 
-                for (int i = 0; i < Circles.Count; i++)
-                {
-                if (car.x >= Circles[i].XC)
+                    if (!l.travel)
                     {
-                       // Circles[i].Getnextpoint();
-                        car.x = Circles[i].XC;
-                        car.y = Circles[i].YC;
+                        car.currline++;
+
+                        if (car.currline >= Parts.Count)
+                        {
+                            flagstart = 0;
+                        }
                     }
 
+                    for (int i = 0; i < Circles.Count; i++)
+                    {
+                        if (car.x >= Circles[i].XC)
+                        {
+                            // Circles[i].Getnextpoint();
+                            car.x = Circles[i].XC;
+                            car.y = Circles[i].YC;
+                        }
+
+                    }
                 }
 
             }
@@ -175,20 +199,27 @@ namespace WindowsFormsApplication1
                 ptrav.Yst = CurrPntY;
                 ptrav.Yend = CurrPntY;
 
-                Lines.Add(ptrav);
+                part p = new part();
+                p.i = 0;
+                p.line = ptrav;
+                Parts.Add(p);
 
                 update_line(ptrav.Xend, ptrav.Yend);
             }
             if (e.KeyCode == Keys.Left)
             {
-                if (Lines.Count != 0)
+                if (Parts.Count != 0)
                 {
-                    Lines.RemoveAt(Lines.Count - 1);
+                    Parts.RemoveAt(Parts.Count - 1);
 
-                    if (Lines.Count != 0)
+                    if (Parts.Count != 0)
                     {
-                        DDA L = Lines[Lines.Count - 1];                        
-                        update_line(L.Xend, L.Yend);
+                        part p = Parts[Parts.Count - 1];
+                        if(p.i == 0)
+                        {
+                            DDA l = p.line;
+                            update_line(l.Xend, l.Yend);
+                        }
                     }
                     else
                     {
@@ -234,32 +265,41 @@ namespace WindowsFormsApplication1
             }
             if (e.KeyCode == Keys.R)
             {
-                if (Lines.Count > 0)
+                if (Parts.Count > 0)
                 {
-                    DDA L = Lines[Lines.Count - 1];
-                    L.Rotate(L, L.Xst, L.Yst, -0.35f);
-                    update_line(L.Xend, L.Yend);
+                    part p = Parts[Parts.Count - 1];
+                    if(p.i == 0)
+                    {
+                        DDA l = p.line;
+                        l.Rotate(l, l.Xst, l.Yst, -0.35f);
+                        update_line(l.Xend, l.Yend);
+                    }
                 }
             }
             if (e.KeyCode == Keys.E)
             {
-                if (Lines.Count > 0)
+                if (Parts.Count > 0)
                 {
-                    DDA L = Lines[Lines.Count - 1];
-                    L.Rotate(L, L.Xst, L.Yst, +0.35f);
-                    update_line(L.Xend, L.Yend);
+                    part p = Parts[Parts.Count - 1];
+                    if (p.i == 0)
+                    {
+                        DDA l = p.line;
+                        l.Rotate(l, l.Xst, l.Yst, +0.35f);
+                        update_line(l.Xend, l.Yend);
+                    }
                 }
             }
             if (e.KeyCode == Keys.F)
             {
-                if (Lines.Count != 0)
+                if (Parts.Count != 0)
                 {
                     //car.x = 0;
                     //car.y = ClientSize.Height/2-car.h;
                     flagstart = 1;
-                    for (int i = 0; i < Lines.Count; i++)
+                    for (int i = 0; i < Parts.Count; i++)
                     {
-                        Lines[i].calc();
+                        if (Parts[i].i == 0)
+                            Parts[i].line.calc();
                     }
                 }
             }
@@ -342,10 +382,14 @@ namespace WindowsFormsApplication1
 
 
 
-            for (int i = 0; i < Lines.Count; i++)
+            for (int i = 0; i < Parts.Count; i++)
             {
-                Pen p = new Pen(Color.White, 7);
-                g.DrawLine(p, Lines[i].Xst, Lines[i].Yst, Lines[i].Xend, Lines[i].Yend);
+                Pen pen = new Pen(Color.White, 7);
+                if (Parts[i].i == 0)
+                {
+                    DDA l = Parts[i].line;
+                    g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
+                }
             }
             for (int i = 0; i < Circles.Count; i++)
             {

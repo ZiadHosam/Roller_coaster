@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 namespace WindowsFormsApplication1
 {
-    public class DDA
+    public class DDA : part
     {
         public float Xst, Yst;
         public float Xend, Yend;
