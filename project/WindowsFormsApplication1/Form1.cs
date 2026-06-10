@@ -52,7 +52,7 @@ namespace WindowsFormsApplication1
         float CurrPntX, PntXreset;
         float CurrPntY, PntYreset;
         int DefaultLineLen;
-        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0;
+        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0, flagurgway = 0;
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
@@ -102,6 +102,7 @@ namespace WindowsFormsApplication1
                         if (car.currline >= Parts.Count)
                         {
                             flagstart = 0;
+                            flagurgway = 0;
                         }
                     }
 
@@ -170,193 +171,205 @@ namespace WindowsFormsApplication1
         }
         void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            if (flagurgway == 0)
             {
-                case Keys.Up:
-                    my_t_inForm += 0.01f;
-                    break;
-                case Keys.Down:
-                    my_t_inForm -= 0.01f;
-                    break;
-
-                case Keys.Space:
-                    if (flag == 0)
-                        flag = 1;
-                    else
-                        flag = 0;
-                    break;
-                case Keys.W:
-                    if (scroll_flag == 1)
-                        return;
-                    Yshow += scrollSpeed;
-                    break;
-                case Keys.S:
-                    if (scroll_flag == 1)
-                        return;
-
-                    if (Yshow - scrollSpeed >= -ClientSize.Height)
-                        Yshow -= scrollSpeed;
-                    break;
-                case Keys.A:
-                    if (scroll_flag == 1)
-                        return;
-                    if (Xshow + scrollSpeed <= 0)
-                        Xshow += scrollSpeed;
-                    break;
-                case Keys.D:
-                    if (scroll_flag == 1)
-                        return;
-                    Xshow -= scrollSpeed;
-                    break;
-                case Keys.D3:
-                    part p = new part();
-                    p.i = 2;
-                    p.curve = create_curve();
-                    Parts.Add(p);
-                    float x = p.curve.ControlPoints[2].X;
-                    float y = p.curve.ControlPoints[2].Y;
-                    update_line(x, y);
-                    break;
-
-            }
-            if (e.KeyCode == Keys.Right)
-            {
-                DDA ptrav = new DDA();
-                
-                ptrav.Xst = CurrPntX;
-                ptrav.Xend = CurrPntX + DefaultLineLen;
-                ptrav.Yst = CurrPntY;
-                ptrav.Yend = CurrPntY;
-
-                part p = new part();
-                p.i = 0;
-                p.line = ptrav;
-                Parts.Add(p);
-
-                update_line(ptrav.Xend, ptrav.Yend);
-            }
-            if (e.KeyCode == Keys.Left)
-            {
-                if (Parts.Count != 0)
+                switch (e.KeyCode)
                 {
-                    Parts.RemoveAt(Parts.Count - 1);
+                    case Keys.Up:
+                        my_t_inForm += 0.01f;
+                        break;
+                    case Keys.Down:
+                        my_t_inForm -= 0.01f;
+                        break;
 
+                    case Keys.Space:
+                        if (flag == 0)
+                            flag = 1;
+                        else
+                            flag = 0;
+                        break;
+                    case Keys.W:
+                        if (scroll_flag == 1)
+                            return;
+                        Yshow += scrollSpeed;
+                        break;
+                    case Keys.S:
+                        if (scroll_flag == 1)
+                            return;
+
+                        if (Yshow - scrollSpeed >= -ClientSize.Height)
+                            Yshow -= scrollSpeed;
+                        break;
+                    case Keys.A:
+                        if (scroll_flag == 1)
+                            return;
+                        if (Xshow + scrollSpeed <= 0)
+                            Xshow += scrollSpeed;
+                        break;
+                    case Keys.D:
+                        if (scroll_flag == 1)
+                            return;
+                        Xshow -= scrollSpeed;
+                        break;
+                    case Keys.D3:
+                        part p = new part();
+                        p.i = 2;
+                        p.curve = create_curve();
+                        Parts.Add(p);
+                        float x = p.curve.ControlPoints[2].X;
+                        float y = p.curve.ControlPoints[2].Y;
+                        update_line(x, y);
+                        break;
+
+                }
+                if (e.KeyCode == Keys.Right)
+                {
+                    DDA ptrav = new DDA();
+
+                    ptrav.Xst = CurrPntX;
+                    ptrav.Xend = CurrPntX + DefaultLineLen;
+                    ptrav.Yst = CurrPntY;
+                    ptrav.Yend = CurrPntY;
+
+                    part p = new part();
+                    p.i = 0;
+                    p.line = ptrav;
+                    Parts.Add(p);
+
+                    update_line(ptrav.Xend, ptrav.Yend);
+                }
+                if (e.KeyCode == Keys.Left)
+                {
                     if (Parts.Count != 0)
                     {
+                        Parts.RemoveAt(Parts.Count - 1);
+
+                        if (Parts.Count != 0)
+                        {
+                            part p = Parts[Parts.Count - 1];
+                            if (p.i == 0)
+                            {
+                                DDA l = p.line;
+                                update_line(l.Xend, l.Yend);
+                            }
+                            else if (p.i == 2)
+                            {
+                                BezierCurve c = p.curve;
+                                PointF pnt = p.curve.GetPoint(p.curve.ControlPoints.Count - 1);
+                                update_line(pnt.X, pnt.Y);
+                            }
+                        }
+                        else
+                        {
+                            update_line(PntXreset, PntYreset);
+                        }
+                    }
+                }
+                if (e.KeyCode == Keys.C)
+                {
+                    Circle ptrav = new Circle();
+                    ptrav.st = 0;
+                    ptrav.end = 360;
+                    ptrav.XC = (int)CurrPntX;
+                    ptrav.YC = (int)CurrPntY - 120;
+                    ptrav.Rad = 120;
+                    Circles.Add(ptrav);
+                }
+                if (e.KeyCode == Keys.X)
+                {
+                    if (Circles.Count > 0)
+                    {
+                        if (Circles[Circles.Count - 1].Rad > 60)
+                        {
+                            Circles[Circles.Count - 1].YC += 20;
+                            Circles[Circles.Count - 1].Rad -= 20;
+                        }
+                        else
+                        {
+                            Circles.RemoveAt(Circles.Count - 1);
+                        }
+                    }
+                }
+                if (e.KeyCode == Keys.V)
+                {
+                    if (Circles.Count > 0)
+                    {
+                        if (Circles[Circles.Count - 1].Rad < 200)
+                        {
+                            Circles[Circles.Count - 1].YC -= 20;
+                            Circles[Circles.Count - 1].Rad += 20;
+                        }
+                    }
+                }
+                if (e.KeyCode == Keys.R)
+                {
+                    if (Parts.Count > 0)
+                    {
                         part p = Parts[Parts.Count - 1];
-                        if(p.i == 0)
+                        if (p.i == 0)
                         {
                             DDA l = p.line;
+                            l.Rotate(l, l.Xst, l.Yst, -0.35f);
                             update_line(l.Xend, l.Yend);
                         }
-                        else if(p.i == 2)
+                        else if (p.i == 2)
                         {
                             BezierCurve c = p.curve;
-                            PointF pnt = p.curve.GetPoint(p.curve.ControlPoints.Count - 1);
-                            update_line(pnt.X, pnt.Y);
+                            PointF cSt = c.GetPoint(0);
+                            c = c.Rotate(c, cSt.X, cSt.Y, -0.35f);
+                            PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
+                            update_line(cEnd.X, cEnd.Y);
                         }
                     }
-                    else
-                    {
-                        update_line(PntXreset, PntYreset);
-                    }
                 }
-            }
-            if (e.KeyCode == Keys.C)
-            {
-                Circle ptrav = new Circle();
-                ptrav.st = 0;
-                ptrav.end = 360;
-                ptrav.XC = (int)CurrPntX;
-                ptrav.YC = (int)CurrPntY - 120;
-                ptrav.Rad = 120;
-                Circles.Add(ptrav);
-            }
-            if (e.KeyCode == Keys.X)
-            {
-                if (Circles.Count > 0)
+                if (e.KeyCode == Keys.E)
                 {
-                    if (Circles[Circles.Count - 1].Rad > 60)
+                    if (Parts.Count > 0)
                     {
-                        Circles[Circles.Count - 1].YC += 20;
-                        Circles[Circles.Count - 1].Rad -= 20;
-                    }
-                    else
-                    {
-                        Circles.RemoveAt(Circles.Count - 1);
+                        part p = Parts[Parts.Count - 1];
+                        if (p.i == 0)
+                        {
+                            DDA l = p.line;
+                            l.Rotate(l, l.Xst, l.Yst, +0.35f);
+                            update_line(l.Xend, l.Yend);
+                        }
+                        else if (p.i == 2)
+                        {
+                            BezierCurve c = p.curve;
+                            PointF cSt = c.GetPoint(0);
+                            c = c.Rotate(c, cSt.X, cSt.Y, +0.35f);
+                            PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
+                            update_line(cEnd.X, cEnd.Y);
+                        }
                     }
                 }
-            }
-            if (e.KeyCode == Keys.V)
-            {
-                if (Circles.Count > 0)
+                if (e.KeyCode == Keys.F)
                 {
-                    if (Circles[Circles.Count - 1].Rad < 200)
+                    if (Parts.Count != 0)
                     {
-                        Circles[Circles.Count - 1].YC -= 20;
-                        Circles[Circles.Count - 1].Rad += 20;
+                        //car.x = PntXreset;
+                        //car.y = PntYreset - car.h;
+                        car.currline = 0;
+                        flagstart = 1;
+                        flagurgway = 1;
+                        for (int i = 0; i < Parts.Count; i++)
+                        {
+                            if (Parts[i].i == 0)
+                                Parts[i].line.calc();
+                        }
                     }
                 }
+                DrawDubb(this.CreateGraphics());
             }
-            if (e.KeyCode == Keys.R)
+            else
             {
-                if (Parts.Count > 0)
+                if (e.KeyCode == Keys.T)
                 {
-                    part p = Parts[Parts.Count - 1];
-                    if(p.i == 0)
-                    {
-                        DDA l = p.line;
-                        l.Rotate(l, l.Xst, l.Yst, -0.35f);
-                        update_line(l.Xend, l.Yend);
-                    }
-                    else if(p.i == 2)
-                    {
-                        BezierCurve c = p.curve;
-                        PointF cSt = c.GetPoint(0);
-                        c = c.Rotate(c, cSt.X, cSt.Y, -0.35f);
-                        PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
-                        update_line(cEnd.X, cEnd.Y);
-                    }
+                    flagstart = 0;
+                    flagurgway = 0;
                 }
+                DrawDubb(this.CreateGraphics());
             }
-            if (e.KeyCode == Keys.E)
-            {
-                if (Parts.Count > 0)
-                {
-                    part p = Parts[Parts.Count - 1];
-                    if (p.i == 0)
-                    {
-                        DDA l = p.line;
-                        l.Rotate(l, l.Xst, l.Yst, +0.35f);
-                        update_line(l.Xend, l.Yend);
-                    }
-                    else if (p.i == 2)
-                    {
-                        BezierCurve c = p.curve;
-                        PointF cSt = c.GetPoint(0);
-                        c = c.Rotate(c, cSt.X, cSt.Y, +0.35f);
-                        PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
-                        update_line(cEnd.X, cEnd.Y);
-                    }
-                }
-            }
-            if (e.KeyCode == Keys.F)
-            {
-                if (Parts.Count != 0)
-                {
-                    //car.x = PntXreset;
-                    //car.y = PntYreset - car.h;
-                    car.currline = 0;
-                    flagstart = 1;
-                    for (int i = 0; i < Parts.Count; i++)
-                    {
-                        if (Parts[i].i == 0)
-                            Parts[i].line.calc();
-                    }
-                }
-            }
-            DrawDubb(this.CreateGraphics());
-
         }
 
 
