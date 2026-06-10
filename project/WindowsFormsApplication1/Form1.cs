@@ -56,6 +56,7 @@ namespace WindowsFormsApplication1
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
+        float cur_t = 0f, CurveSpeed;
         PointF carPoint;
         int indexCurrDragNode = -1;
         Bitmap off;
@@ -104,16 +105,34 @@ namespace WindowsFormsApplication1
                         }
                     }
 
-                    for (int i = 0; i < Circles.Count; i++)
-                    {
-                        if (car.x >= Circles[i].XC)
-                        {
-                            // Circles[i].Getnextpoint();
-                            car.x = Circles[i].XC;
-                            car.y = Circles[i].YC;
-                        }
+                    //for (int i = 0; i < Circles.Count; i++)
+                    //{
+                    //    if (car.x >= Circles[i].XC)
+                    //    {
+                    //        // Circles[i].Getnextpoint();
+                    //        car.x = Circles[i].XC;
+                    //        car.y = Circles[i].YC;
+                    //    }
 
+                    //}
+                }
+                else if (Parts[car.currline].i == 2)
+                {
+                    BezierCurve c = Parts[car.currline].curve;
+                    cur_t += CurveSpeed;
+                    PointF pnt = c.CalcCurvePointAtTime(cur_t);
+                    car.x = pnt.X - car.w;
+                    car.y = pnt.Y - car.h;
+                    if (cur_t >= 1)
+                    {
+                        cur_t = 0f;
+                        car.currline++;
+                        if (car.currline >= Parts.Count)
+                        {
+                            flagstart = 0;
+                        }
                     }
+
                 }
 
             }
@@ -136,6 +155,7 @@ namespace WindowsFormsApplication1
             Xshow = 0;
             Yshow = -ClientSize.Height;
             scrollSpeed = 20;
+            CurveSpeed = 0.1f;
             PntXreset = 0;
             PntYreset = (int)(ClientSize.Height * 1.5);
             CurrPntX = PntXreset;
