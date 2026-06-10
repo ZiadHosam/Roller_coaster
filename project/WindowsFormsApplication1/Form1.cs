@@ -24,7 +24,8 @@ namespace WindowsFormsApplication1
     {
         float CurrPntX = 0;
         float CurrPntY = 0;
-        int flag = 0;
+        int flag = 0, scroll_flag = 0;
+        int Xshow, Yshow, Xold, Yold;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         PointF carPoint;
@@ -47,9 +48,10 @@ namespace WindowsFormsApplication1
         }
         void Form1_Load(object sender, EventArgs e)
         {
-            off = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            off = new Bitmap(this.ClientSize.Width * 2, this.ClientSize.Height * 2);
             background = new Bitmap("bg3.jpg");
-
+            Xshow = 0;
+            Yshow = -ClientSize.Height;
 
         }
 
@@ -70,6 +72,7 @@ namespace WindowsFormsApplication1
                     else
                         flag = 0;
                     break;
+                case Keys.W:
 
             }
             if (e.KeyCode == Keys.Right)
@@ -164,6 +167,7 @@ namespace WindowsFormsApplication1
                     L.Rotate(L, L.Xst, L.Yst, +0.35f);
                 }
             }
+
             DrawDubb(this.CreateGraphics());
 
         }
@@ -184,7 +188,9 @@ namespace WindowsFormsApplication1
                     indexCurrDragNode = obj.isCtrlPoint(e.X, e.Y);
                     break;
             }
-
+            scroll_flag = 1;
+            Xold = e.X;
+            Yold = e.Y;
             DrawDubb(this.CreateGraphics());
         }
 
@@ -195,6 +201,24 @@ namespace WindowsFormsApplication1
                 obj.ModifyCtrlPoint(indexCurrDragNode, e.X, e.Y);
                 DrawDubb(this.CreateGraphics());
             }
+            if (scroll_flag == 1)
+            {
+                int Xnew = e.X - Xold;
+                int Ynew = e.Y - Yold;
+                if (Xshow + Xnew <= 0)
+                    Xshow += Xnew;
+                else
+                    Xshow = 0;
+                if (Yshow + Ynew >= -ClientSize.Height)
+                    Yshow += Ynew;
+                else
+                    Yshow = -ClientSize.Height;
+                Xold = e.X;
+                Yold = e.Y;
+                DrawDubb(this.CreateGraphics());
+
+            }
+
         }
 
         private void Form1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -204,6 +228,7 @@ namespace WindowsFormsApplication1
                 indexCurrDragNode = -1;
                 DrawDubb(this.CreateGraphics());
             }
+            scroll_flag = 0;
         }
 
 
@@ -212,7 +237,8 @@ namespace WindowsFormsApplication1
         {
             g.Clear(Color.White);
 
-            g.DrawImage(background, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            g.DrawImage(background, 0, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
+            g.DrawImage(background, ClientSize.Width, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
             obj.DrawCurve(g);
 
 
@@ -240,7 +266,8 @@ namespace WindowsFormsApplication1
         {
             Graphics g2 = Graphics.FromImage(off);
             DrawScene(g2);
-            g.DrawImage(off, 0, 0);
+            g.DrawImage(off, Xshow, Yshow);
+            g.DrawImage(off, 0, 0,200,200);
         }
     }
 }
