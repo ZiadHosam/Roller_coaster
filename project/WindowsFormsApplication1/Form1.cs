@@ -193,8 +193,8 @@ namespace WindowsFormsApplication1
                     p.i = 2;
                     p.curve = create_curve();
                     Parts.Add(p);
-                    int x = p.curve.ControlPoints[2].X;
-                    int y = p.curve.ControlPoints[2].Y;
+                    float x = p.curve.ControlPoints[2].X;
+                    float y = p.curve.ControlPoints[2].Y;
                     update_line(x, y);
                     break;
 
@@ -228,6 +228,12 @@ namespace WindowsFormsApplication1
                         {
                             DDA l = p.line;
                             update_line(l.Xend, l.Yend);
+                        }
+                        else if(p.i == 2)
+                        {
+                            BezierCurve c = p.curve;
+                            PointF pnt = p.curve.GetPoint(p.curve.ControlPoints.Count - 1);
+                            update_line(pnt.X, pnt.Y);
                         }
                     }
                     else
@@ -283,6 +289,14 @@ namespace WindowsFormsApplication1
                         l.Rotate(l, l.Xst, l.Yst, -0.35f);
                         update_line(l.Xend, l.Yend);
                     }
+                    else if(p.i == 2)
+                    {
+                        BezierCurve c = p.curve;
+                        PointF cSt = c.GetPoint(0);
+                        c = c.Rotate(c, cSt.X, cSt.Y, -0.35f);
+                        PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
+                        update_line(cEnd.X, cEnd.Y);
+                    }
                 }
             }
             if (e.KeyCode == Keys.E)
@@ -295,6 +309,14 @@ namespace WindowsFormsApplication1
                         DDA l = p.line;
                         l.Rotate(l, l.Xst, l.Yst, +0.35f);
                         update_line(l.Xend, l.Yend);
+                    }
+                    else if (p.i == 2)
+                    {
+                        BezierCurve c = p.curve;
+                        PointF cSt = c.GetPoint(0);
+                        c = c.Rotate(c, cSt.X, cSt.Y, +0.35f);
+                        PointF cEnd = c.GetPoint(c.ControlPoints.Count - 1);
+                        update_line(cEnd.X, cEnd.Y);
                     }
                 }
             }
@@ -400,7 +422,7 @@ namespace WindowsFormsApplication1
 
             for (int i = 0; i < Parts.Count; i++)
             {
-                Pen pen = new Pen(Color.White, 7);
+                Pen pen = new Pen(Color.White, 4);
                 if (Parts[i].i == 0)
                 {
                     DDA l = Parts[i].line;

@@ -16,17 +16,17 @@ namespace WindowsFormsApplication1
 	public class BezierCurve
 	{
 		
-		public List<Point> ControlPoints;
+		public List<PointF> ControlPoints;
 
         public float t_inc = 0.001f;
         
-        public Color cl = Color.Red;
+        public Color cl = Color.White;
         public Color clr1 = Color.Blue;
         public Color ftColor = Color.Black;
 
 		public BezierCurve()
 		{
-			ControlPoints = new List<Point>();
+			ControlPoints = new List<PointF>();
 		}
 
 
@@ -55,7 +55,7 @@ namespace WindowsFormsApplication1
 			return res;
 		}
 
-		public Point GetPoint(int i)
+		public PointF GetPoint(int i)
 		{
 			 return ControlPoints[i];
 		}
@@ -91,7 +91,7 @@ namespace WindowsFormsApplication1
 			Rectangle rc;
 			for (int i=0; i<ControlPoints.Count; i++)
 			{
-				rc = new Rectangle(ControlPoints[i].X-5, ControlPoints[i].Y-5, 10,10);
+				rc = new Rectangle((int)ControlPoints[i].X-5, (int)ControlPoints[i].Y-5, 10,10);
 				if (XMouse >= rc.Left && XMouse <= rc.Right && YMouse >= rc.Top && YMouse <= rc.Bottom)
 				{
 					return i;
@@ -102,7 +102,7 @@ namespace WindowsFormsApplication1
 
 		public void ModifyCtrlPoint(int i , int XMouse, int YMouse)
 		{
-			Point p = ControlPoints[i];			
+			PointF p = ControlPoints[i];			
             
 			p.X =  XMouse;
 			p.Y =  YMouse;
@@ -135,6 +135,40 @@ namespace WindowsFormsApplication1
 			DrawCurvePoints(g);
 		}
 
-		
-	}
+        public BezierCurve Rotate(BezierCurve curve, float xRef, float yRef, float speed)
+        {
+            ///////////////////
+            //// translate
+            //////////////////
+            for (int i = 0; i < curve.ControlPoints.Count; i++)
+            {
+                PointF L = curve.ControlPoints[i];
+                L.X -= xRef;
+                L.Y -= yRef;
+
+                double xn = L.X * Math.Cos(speed) - L.Y * Math.Sin(speed);
+                double Yn = L.X * Math.Sin(speed) + L.Y * Math.Cos(speed);
+
+                L.X = (float)xn;
+                L.Y = (float)Yn;
+
+                L.X += xRef;
+                L.Y += yRef;
+
+                curve.ControlPoints[i] = L;
+            }
+
+            ///////////////////
+            //// Rotate around origin
+            //////////////////
+
+
+            ///////////////////
+            //// undo the translation
+            //////////////////
+
+            return curve;
+        }
+
+    }
 }
