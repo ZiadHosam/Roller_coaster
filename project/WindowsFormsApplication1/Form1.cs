@@ -324,7 +324,7 @@ namespace WindowsFormsApplication1
             {
                 Circles[i].Drawcircle(g);
             }
-
+            g.DrawImage(off, 0 - Xshow, 0 - Yshow, 200, 200);
             carPoint = obj.CalcCurvePointAtTime(my_t_inForm);
             g.FillEllipse(Brushes.SkyBlue, carPoint.X - 15, carPoint.Y - 15, 30, 30);
             g.DrawString("right:newl,left:deletel//c:newc,x:shrinkc,v:enlargec//e:rotatel down,r:rotatel up//// s:start " + CurrPntX, new Font("System", 20), Brushes.White, 10, 10);
@@ -338,7 +338,6 @@ namespace WindowsFormsApplication1
             Graphics g2 = Graphics.FromImage(off);
             DrawScene(g2);
             g.DrawImage(off, Xshow, Yshow);
-            g.DrawImage(off, 0, 0,200,200);
         }
     }
 }
