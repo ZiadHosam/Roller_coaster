@@ -114,6 +114,11 @@ namespace WindowsFormsApplication1
             DefaultLineLen = 100;
         }
 
+        public void update_line(float x, float y)
+        {
+            CurrPntX = x;
+            CurrPntY = y;
+        }
         void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -144,8 +149,8 @@ namespace WindowsFormsApplication1
                 ptrav.Yend = CurrPntY;
 
                 Lines.Add(ptrav);
-                CurrPntX = Lines[Lines.Count - 1].Xend;
-                //CurrPntY = Lines[Lines.Count - 1].Yend;
+
+                update_line(ptrav.Xend, ptrav.Yend);
             }
             if (e.KeyCode == Keys.Left)
             {
@@ -155,13 +160,12 @@ namespace WindowsFormsApplication1
 
                     if (Lines.Count != 0)
                     {
-                        CurrPntX = Lines[Lines.Count - 1].Xend;
-                        CurrPntY = Lines[Lines.Count - 1].Yend;
+                        DDA L = Lines[Lines.Count - 1];                        
+                        update_line(L.Xend, L.Yend);
                     }
                     else
                     {
-                        CurrPntX = PntXreset;
-                        CurrPntY = PntYreset;
+                        update_line(PntXreset, PntYreset);
                     }
                 }
             }
@@ -207,6 +211,7 @@ namespace WindowsFormsApplication1
                 {
                     DDA L = Lines[Lines.Count - 1];
                     L.Rotate(L, L.Xst, L.Yst, -0.35f);
+                    update_line(L.Xend, L.Yend);
                 }
             }
             if (e.KeyCode == Keys.E)
@@ -215,6 +220,7 @@ namespace WindowsFormsApplication1
                 {
                     DDA L = Lines[Lines.Count - 1];
                     L.Rotate(L, L.Xst, L.Yst, +0.35f);
+                    update_line(L.Xend, L.Yend);
                 }
             }
             if (e.KeyCode == Keys.S)
