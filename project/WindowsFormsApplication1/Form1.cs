@@ -344,8 +344,8 @@ namespace WindowsFormsApplication1
             {
                 if (Parts.Count != 0)
                 {
-                    //car.x = 0;
-                    //car.y = ClientSize.Height/2-car.h;
+                    car.x = PntXreset;
+                    car.y = PntYreset - car.h;
                     flagstart = 1;
                     for (int i = 0; i < Parts.Count; i++)
                     {
