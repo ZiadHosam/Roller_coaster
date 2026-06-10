@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1
         public float t_inc = 0.001f;
         
         public Color cl = Color.White;
-        public Color clr1 = Color.Blue;
+        public Color clr1 = Color.Black;
         public Color ftColor = Color.Black;
 
 		public BezierCurve()
@@ -91,7 +91,7 @@ namespace WindowsFormsApplication1
 			Rectangle rc;
 			for (int i=0; i<ControlPoints.Count; i++)
 			{
-				rc = new Rectangle((int)ControlPoints[i].X-5, (int)ControlPoints[i].Y-5, 10,10);
+				rc = new Rectangle((int)ControlPoints[i].X-15, (int)ControlPoints[i].Y-15, 30,30);
 				if (XMouse >= rc.Left && XMouse <= rc.Right && YMouse >= rc.Top && YMouse <= rc.Bottom)
 				{
 					return i;
@@ -129,9 +129,10 @@ namespace WindowsFormsApplication1
 				}
 		}
 
-		public void DrawCurve(Graphics g)
+		public void DrawCurve(Graphics g, int f)
 		{
-			DrawControlPoints(g);
+			if(f == 1)
+				DrawControlPoints(g);
 			DrawCurvePoints(g);
 		}
 

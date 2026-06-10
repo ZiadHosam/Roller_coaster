@@ -52,13 +52,13 @@ namespace WindowsFormsApplication1
         float CurrPntX, PntXreset;
         float CurrPntY, PntYreset;
         int DefaultLineLen;
-        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0, flagurgway = 0;
+        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0, flagurgway = 0, flag_type = 0;
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         float cur_t = 0f, CurveSpeed;
         PointF carPoint;
-        int indexCurrDragNode = -1;
+        int indexCurrDragNode = -1, indexCurrNode = -1;
         Bitmap off;
         Bitmap background;
         float count = 0;
@@ -175,42 +175,19 @@ namespace WindowsFormsApplication1
             {
                 switch (e.KeyCode)
                 {
-                    case Keys.Up:
-                        my_t_inForm += 0.01f;
-                        break;
-                    case Keys.Down:
-                        my_t_inForm -= 0.01f;
-                        break;
+                    //case Keys.Up:
+                    //    my_t_inForm += 0.01f;
+                    //    break;
+                    //case Keys.Down:
+                    //    my_t_inForm -= 0.01f;
+                    //    break;
 
-                    case Keys.Space:
-                        if (flag == 0)
-                            flag = 1;
-                        else
-                            flag = 0;
-                        break;
-                    case Keys.W:
-                        if (scroll_flag == 1)
-                            return;
-                        Yshow += scrollSpeed;
-                        break;
-                    case Keys.S:
-                        if (scroll_flag == 1)
-                            return;
-
-                        if (Yshow - scrollSpeed >= -ClientSize.Height)
-                            Yshow -= scrollSpeed;
-                        break;
-                    case Keys.A:
-                        if (scroll_flag == 1)
-                            return;
-                        if (Xshow + scrollSpeed <= 0)
-                            Xshow += scrollSpeed;
-                        break;
-                    case Keys.D:
-                        if (scroll_flag == 1)
-                            return;
-                        Xshow -= scrollSpeed;
-                        break;
+                    //case Keys.Space:
+                    //    if (flag == 0)
+                    //        flag = 1;
+                    //    else
+                    //        flag = 0;
+                    //    break;
                     case Keys.D3:
                         part p = new part();
                         p.i = 2;
@@ -220,9 +197,12 @@ namespace WindowsFormsApplication1
                         float y = p.curve.ControlPoints[2].Y;
                         update_line(x, y);
                         break;
-
+                    case Keys.ControlKey:
+                        flagurgway = 1;
+                        flag_type = 1;
+                        break;
                 }
-                if (e.KeyCode == Keys.Right)
+                if (e.KeyCode == Keys.D1)
                 {
                     DDA ptrav = new DDA();
 
@@ -265,7 +245,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.C)
+                if (e.KeyCode == Keys.D2)
                 {
                     Circle ptrav = new Circle();
                     ptrav.st = 0;
@@ -275,7 +255,7 @@ namespace WindowsFormsApplication1
                     ptrav.Rad = 120;
                     Circles.Add(ptrav);
                 }
-                if (e.KeyCode == Keys.X)
+                if (e.KeyCode == Keys.I)
                 {
                     if (Circles.Count > 0)
                     {
@@ -290,7 +270,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.V)
+                if (e.KeyCode == Keys.K)
                 {
                     if (Circles.Count > 0)
                     {
@@ -301,7 +281,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.R)
+                if (e.KeyCode == Keys.J)
                 {
                     if (Parts.Count > 0)
                     {
@@ -322,7 +302,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.E)
+                if (e.KeyCode == Keys.L)
                 {
                     if (Parts.Count > 0)
                     {
@@ -368,6 +348,39 @@ namespace WindowsFormsApplication1
                     flagstart = 0;
                     flagurgway = 0;
                 }
+                if(flag_type == 1)
+                {
+                    switch (e.KeyCode)
+                    {
+                        case Keys.ControlKey:
+                            flag_type = 0;
+                            flagurgway = 0;
+                            break;
+                        case Keys.W:
+                            if (scroll_flag == 1)
+                                return;
+                            Yshow += scrollSpeed;
+                            break;
+                        case Keys.S:
+                            if (scroll_flag == 1)
+                                return;
+
+                            if (Yshow - scrollSpeed >= -ClientSize.Height)
+                                Yshow -= scrollSpeed;
+                            break;
+                        case Keys.A:
+                            if (scroll_flag == 1)
+                                return;
+                            if (Xshow + scrollSpeed <= 0)
+                                Xshow += scrollSpeed;
+                            break;
+                        case Keys.D:
+                            if (scroll_flag == 1)
+                                return;
+                            Xshow -= scrollSpeed;
+                            break;
+                    }
+                }
                 DrawDubb(this.CreateGraphics());
             }
         }
@@ -385,14 +398,32 @@ namespace WindowsFormsApplication1
 
         private void Form1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            switch (flag)
+            switch (flag_type)
             {
-                case 0:
-                    obj.SetControlPoint(new Point(e.X, e.Y));
-                    break;
+                //case 0:
+                //    obj.SetControlPoint(new Point(e.X, e.Y));
+                //    break;
 
                 case 1:
-                    indexCurrDragNode = obj.isCtrlPoint(e.X, e.Y);
+                    int tmpindex = -1;
+                    for(int i = 0; i< Parts.Count; i++)
+                    {
+                        part p = Parts[i];
+                        if(p.i == 2)
+                        {
+                            int x = e.X - Xshow;
+                            int y = e.Y - Yshow;
+                            BezierCurve c = p.curve;
+                            tmpindex = c.isCtrlPoint(x, y);
+                            if (tmpindex != -1)
+                            {
+                                indexCurrDragNode = tmpindex;
+                                flag = 1;
+                                indexCurrNode = i;
+                                break;
+                            }
+                        }
+                    }
                     break;
             }
             scroll_flag = 1;
@@ -403,12 +434,24 @@ namespace WindowsFormsApplication1
 
         private void Form1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (flag == 1 && indexCurrDragNode != -1)
+            if (flag_type == 1 && flag == 1)
             {
-                obj.ModifyCtrlPoint(indexCurrDragNode, e.X, e.Y);
+                part p = Parts[indexCurrNode];
+                if (p.i == 2)
+                {
+                    if (indexCurrNode == Parts.Count - 1 && indexCurrDragNode != 0)
+                    {
+                        int x = e.X - Xshow;
+                        int y = e.Y - Yshow;
+                        BezierCurve c = p.curve;
+                        c.ModifyCtrlPoint(indexCurrDragNode, x, y);
+                        if(indexCurrNode == Parts.Count - 1)
+                            update_line(x, y);
+                    }
+                }
                 DrawDubb(this.CreateGraphics());
             }
-            if (scroll_flag == 1)
+            if (scroll_flag == 1 && flag_type == 0)
             {
                 int Xnew = e.X - Xold;
                 int Ynew = e.Y - Yold;
@@ -430,9 +473,10 @@ namespace WindowsFormsApplication1
 
         private void Form1_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (flag == 1)
+            if (flag_type == 1)
             {
-                indexCurrDragNode = -1;
+                flag = 0;
+                //indexCurrDragNode = -1;
                 DrawDubb(this.CreateGraphics());
             }
             scroll_flag = 0;
@@ -442,12 +486,12 @@ namespace WindowsFormsApplication1
 
         private void DrawScene(Graphics g)
         {
-            g.Clear(Color.Black);
+            g.Clear(Color.LightCyan);
             //g.Clear(Color.White);
 
             g.DrawImage(background, 0, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
             g.DrawImage(background, ClientSize.Width, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
-            obj.DrawCurve(g);
+            //obj.DrawCurve(g);
 
             g.DrawImage(car.img, car.x, car.y, car.w, car.h);
 
@@ -461,6 +505,15 @@ namespace WindowsFormsApplication1
                 {
                     DDA l = Parts[i].line;
                     g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
+                    if(flag_type == 1)
+                    {
+                        g.FillEllipse(new SolidBrush(Color.Black),
+                                l.Xst - 5,
+                                l.Yst - 5, 10, 10);
+                        g.FillEllipse(new SolidBrush(Color.Black),
+                                l.Xend - 5,
+                                l.Yend - 5, 10, 10);
+                    }
                 }
                 else if (Parts[i].i == 1)
                 {
@@ -469,7 +522,8 @@ namespace WindowsFormsApplication1
                 else if (Parts[i].i == 2)
                 {
                     BezierCurve c = Parts[i].curve;
-                    c.DrawCurve(g);
+                    c.DrawCurve(g, flag_type);
+
                 }
             }
             for (int i = 0; i < Circles.Count; i++)
