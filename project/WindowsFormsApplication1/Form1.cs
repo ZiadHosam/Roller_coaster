@@ -20,18 +20,31 @@ namespace WindowsFormsApplication1
             g.FillEllipse(Brushes.Red, ptE.X - 5, ptE.Y - 5, 10, 10);
         }
     }
+    public class Ccar
+    {
+        public float x;
+        public float y = -100;
+        public float w = 30;
+        public float h = 30;
+        public int currline = 0;
+        public Bitmap img;
+    }
     public partial class Form1 : Form
     {
         float CurrPntX = 0;
         float CurrPntY = 0;
         int flag = 0;
+        int flagstart = 0;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         PointF carPoint;
         int indexCurrDragNode = -1;
         Bitmap off;
         Bitmap background;
+        float count = 0;
+        Timer tt = new Timer();
 
+        Ccar car = new Ccar();
         List<DDA> Lines = new List<DDA>();
         List<Circle> Circles = new List<Circle>();
         public Form1()
@@ -44,13 +57,51 @@ namespace WindowsFormsApplication1
             this.MouseDown += new MouseEventHandler(Form1_MouseDown);
             this.MouseMove += new MouseEventHandler(Form1_MouseMove);
             this.MouseUp += Form1_MouseUp;
+            tt.Tick += Tt_Tick;
+            tt.Start();
         }
+
+        private void Tt_Tick(object sender, EventArgs e)
+        {
+            if (flagstart == 1)
+            {
+                Lines[car.currline].CalcNextPoint();
+
+                car.x = Lines[car.currline].cx - car.w;
+                car.y = Lines[car.currline].cy - car.h;
+
+                if (!Lines[car.currline].travel)
+                {
+                    car.currline++;
+
+                    if (car.currline >= Lines.Count)
+                    {
+                        flagstart = 0;
+                    }
+                }
+
+                for (int i = 0; i < Circles.Count; i++)
+                {
+                if (car.x >= Circles[i].XC)
+                    {
+                       // Circles[i].Getnextpoint();
+                        car.x = Circles[i].XC;
+                        car.y = Circles[i].YC;
+                    }
+
+                }
+
+            }
+            //count++;
+            DrawDubb(this.CreateGraphics());
+        }
+
         void Form1_Load(object sender, EventArgs e)
         {
             off = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
             background = new Bitmap("bg3.jpg");
 
-
+            car.img = new Bitmap("bg4.jpg");
         }
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -164,6 +215,19 @@ namespace WindowsFormsApplication1
                     L.Rotate(L, L.Xst, L.Yst, +0.35f);
                 }
             }
+            if (e.KeyCode == Keys.S)
+            {
+                if (Lines.Count != 0)
+                {
+                    //car.x = 0;
+                    //car.y = ClientSize.Height/2-car.h;
+                    flagstart = 1;
+                    for (int i = 0; i < Lines.Count; i++)
+                    {
+                        Lines[i].calc();
+                    }
+                }
+            }
             DrawDubb(this.CreateGraphics());
 
         }
@@ -215,6 +279,8 @@ namespace WindowsFormsApplication1
             g.DrawImage(background, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             obj.DrawCurve(g);
 
+            g.DrawImage(car.img, car.x, car.y, car.w, car.h);
+
 
 
 
@@ -230,7 +296,7 @@ namespace WindowsFormsApplication1
 
             carPoint = obj.CalcCurvePointAtTime(my_t_inForm);
             g.FillEllipse(Brushes.SkyBlue, carPoint.X - 15, carPoint.Y - 15, 30, 30);
-            g.DrawString("right:newl,left:deletel//c:newc,x:shrinkc,v:enlargec//e:rotatel down,r:rotatel up " + CurrPntX, new Font("System", 20), Brushes.White, 10, 10);
+            g.DrawString("right:newl,left:deletel//c:newc,x:shrinkc,v:enlargec//e:rotatel down,r:rotatel up//// s:start " + CurrPntX, new Font("System", 20), Brushes.White, 10, 10);
         }
         private void Form1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
@@ -245,4 +311,34 @@ namespace WindowsFormsApplication1
     }
 }
 
+//Some of you were asking how to rotate an image, here is some code similar to the technique we have learnt in the lectures, however it uses the ready mades provided by c#:
 
+//    //The image you want to rotate
+
+//    Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+//Graphics g = Graphics.FromImage(bmp);
+
+
+
+////now we set the rotation point to the center of our image
+
+//g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+
+
+////now rotate the image
+
+//g.RotateTransform(rotationAngle);
+
+
+
+////now we return the transformation we applied
+
+//g.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+
+
+////now draw our the new image
+
+//g.DrawImage(img, new Point(0, 0));
