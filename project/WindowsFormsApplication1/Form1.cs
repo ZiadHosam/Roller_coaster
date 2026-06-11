@@ -54,7 +54,7 @@ namespace WindowsFormsApplication1
         float CurrPntX, PntXreset;
         float CurrPntY, PntYreset;
         int DefaultLineLen;
-        int flag = 0, scroll_flag = 0, flagstart = 0, ftest = 0, flagurgway = 0, flag_type = 0;
+        int flag = 0, scroll_flag = 0, flagstart = 0, ftest = 0, flagurgway = 0, flag_type = 0,flag_follow = 0;
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
 
         int maxScrollX;
         Ccar car = new Ccar();
-        int carspeed = 10;
+        int carspeed = 15;
         List<part> Parts = new List<part>();
         //List<part> Lines = new List<part>();
         List<Circle> Circles = new List<Circle>();
@@ -99,10 +99,8 @@ namespace WindowsFormsApplication1
                 {
                     DDA l = Parts[car.currline].line;
                     l.CalcNextPoint(carspeed);
-
                     car.x = l.cx - car.w;
                     car.y = l.cy - car.h;
-
                     if (!l.travel)
                     {
                         car.currline++;
@@ -111,6 +109,7 @@ namespace WindowsFormsApplication1
                         {
                             flagstart = 0;
                             flagurgway = 0;
+                            flag_follow = 0;
                         }
                     }
 
@@ -145,6 +144,7 @@ namespace WindowsFormsApplication1
                         {
                             flagstart = 0;
                             flagurgway = 0;
+                            flag_follow = 0;
                         }
                     }
 
@@ -173,6 +173,7 @@ namespace WindowsFormsApplication1
                         {
                             flagstart = 0;
                             flagurgway = 0;
+                            flag_follow = 0;
                         }
                     }
 
@@ -236,6 +237,12 @@ namespace WindowsFormsApplication1
                     //    else
                     //        flag = 0;
                     //    break;
+                    case Keys.R:
+                        if (flag_follow == 1)
+                            flag_follow = 0;
+                        if (flag_follow == 0)
+                            flag_follow = 1;
+                        break;
                     case Keys.D3:
                         part p = new part();
                         p.i = 2;
@@ -266,7 +273,7 @@ namespace WindowsFormsApplication1
 
                     update_line(ptrav.Xend, ptrav.Yend);
                 }
-                if (e.KeyCode == Keys.J)
+                if (e.KeyCode == Keys.U)
                 {
                     if (Parts.Count != 0)
                     {
@@ -312,7 +319,7 @@ namespace WindowsFormsApplication1
                     //float y = p.curve.ControlPoints[2].Y;
                     //update_line(x, y);
                 }
-                if (e.KeyCode == Keys.L)
+                if (e.KeyCode == Keys.I)
                 {
                     if(Parts.Count > 0)
                     {
@@ -334,22 +341,49 @@ namespace WindowsFormsApplication1
                                 c.Rad += 20;
                             }
                         }
+                        else if (p.i == 2)
+                        {
+                            BezierCurve c = p.curve;
+                            PointF end = c.ControlPoints[c.ControlPoints.Count - 1];
+                            c.ControlPoints[c.ControlPoints.Count - 1] = new PointF(end.X + stretchval,end.Y);
+                            PointF mid = c.ControlPoints[c.ControlPoints.Count - 2];
+                            c.ControlPoints[c.ControlPoints.Count - 2] = new PointF(mid.X + (stretchval/2), mid.Y - stretchval);
+                        }
+                    }
+                }
+                if (e.KeyCode == Keys.K)
+                {
+                    if (Parts.Count > 0)
+                    {
+                        part p = Parts[Parts.Count - 1];
+                        if (p.i == 0)
+                        {
+                            DDA l = p.line;
+                            l.Xend -= stretchval;
+                            //l.Yend += l.dx;
+                            l.calc();
+                            update_line(l.Xend, l.Yend);
+                        }
+                        else if (p.i == 1)
+                        {
+                            Circle c = p.circ;
+                            if (c.Rad > 40)
+                            {
+                                c.YC += 20;
+                                c.Rad -= 20;
+                            }
+                        }
+                        else if (p.i == 2)
+                        {
+                            BezierCurve c = p.curve;
+                            PointF end = c.ControlPoints[c.ControlPoints.Count - 1];
+                            c.ControlPoints[c.ControlPoints.Count - 1] = new PointF(end.X - stretchval, end.Y);
+                            PointF mid = c.ControlPoints[c.ControlPoints.Count - 2];
+                            c.ControlPoints[c.ControlPoints.Count - 2] = new PointF(mid.X - (stretchval / 2), mid.Y + stretchval);
+                        }
                     }
                 }
                 if (e.KeyCode == Keys.J)
-                {
-                    //if (Parts.Count > 0)
-                    //{
-                    //    part p = Parts[Parts.Count - 1];
-                    //    if (p.i == 0)
-                    //    {
-                    //        DDA l = p.line;
-                    //        l.Xend = stretchval;
-                    //        update_line(l.Xend, l.Yend);
-                    //    }
-                    //}
-                }
-                if (e.KeyCode == Keys.I)
                 {
                     if (Parts.Count > 0)
                     {
@@ -375,7 +409,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.K)
+                if (e.KeyCode == Keys.L)
                 {
                     if (Parts.Count > 0)
                     {
@@ -401,7 +435,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.F)
+                if (e.KeyCode == Keys.Q)
                 {
                     if (Parts.Count != 0)
                     {
@@ -410,6 +444,7 @@ namespace WindowsFormsApplication1
                         car.currline = 0;
                         flagstart = 1;
                         flagurgway = 1;
+                        flag_follow = 1;
                         for (int i = 0; i < Parts.Count; i++)
                         {
                             if (Parts[i].i == 0)
@@ -417,25 +452,16 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.Z)
-                {
-                    carspeed -= 5;
-                    CurveSpeed -= 0.03f;
-                }
-                if (e.KeyCode == Keys.X)
-                {
-                    carspeed += 5;
-                    CurveSpeed += 0.03f;
-                }
 
                 DrawDubb(this.CreateGraphics());
             }
             else
             {
-                if (e.KeyCode == Keys.T)
+                if (e.KeyCode == Keys.E)
                 {
                     flagstart = 0;
                     flagurgway = 0;
+                    flag_follow = 0;
                 }
                 if (flag_type == 1)
                 {
@@ -444,6 +470,7 @@ namespace WindowsFormsApplication1
                         case Keys.ControlKey:
                             flag_type = 0;
                             flagurgway = 0;
+                            flag_follow = 0;
                             break;
                         case Keys.W:
                             if (scroll_flag == 1)
@@ -484,6 +511,19 @@ namespace WindowsFormsApplication1
                 //    carspeed += 5;
                 //    CurveSpeed += 0.03f;
                 //}
+                if (e.KeyCode == Keys.O)
+                {
+                    carspeed -= 5;
+                    CurveSpeed -= 0.03f;
+                    CircleSpeed -= 5;
+                }
+                if (e.KeyCode == Keys.P)
+                {
+                    carspeed += 5;
+                    CurveSpeed += 0.03f;
+                    CircleSpeed += 5;
+
+                }
                 DrawDubb(this.CreateGraphics());
             }
         }
@@ -696,12 +736,12 @@ namespace WindowsFormsApplication1
             new string[] { "    1", "New Line" },
             new string[] { "    2", "New Circle" },
             new string[] { "    3", "New Curve" },
-            new string[] { "    F", "Start" },
-            new string[] { "    T", "Stop" },
-            new string[] { "    ← ", "Delete Last" },
+            new string[] { "    Q", "Start" },
+            new string[] { "    E", "Stop" },
+            new string[] { "    U ", "Delete Last" },
             new string[] { "   J/L", "Rotate" },
-            new string[] { "   Z/X", "Speed -/+" },
-            new string[] { "   I/K", "Radius -/+" },
+            new string[] { "   I/K", "Size -/+" },
+            new string[] { "   O/P", "Speed -/+" },
             new string[] { "CTRL", "Edit Mode" },
             new string[] { "   A/D", "Scroll" },
             };
@@ -736,28 +776,28 @@ namespace WindowsFormsApplication1
 
 //    Bitmap bmp = new Bitmap(img.Width, img.Height);
 
-//Graphics g = Graphics.FromImage(bmp);
 
 
 
 ////now we set the rotation point to the center of our image
 
-//g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
 
 
 
 ////now rotate the image
 
-//g.RotateTransform(rotationAngle);
 
 
 
 ////now we return the transformation we applied
 
+//Graphics g = Graphics.FromImage(bmp);
+//g.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+//g.RotateTransform(rotationAngle);
 //g.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
-
+//g.DrawImage(img, new Point(0, 0));
 
 
 ////now draw our the new image
 
-//g.DrawImage(img, new Point(0, 0));
+//
