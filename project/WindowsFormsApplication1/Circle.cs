@@ -8,8 +8,8 @@ namespace WindowsFormsApplication1
     public class Circle
     {
         public int Rad;
-        public int XC;
-        public int YC;
+        public float XC;
+        public float YC;
         public float thRadian;
         public float st, end;
         public int dir;
@@ -69,5 +69,33 @@ namespace WindowsFormsApplication1
             p.Y = (float)(Rad * Math.Sin(thRadian)) + YC;
             return p;
         }
+
+        public void Rotate(float xRef, float yRef, float ang)
+        {
+            ///////////////////
+            //// translate
+            //////////////////
+            XC -= xRef;
+            YC -= yRef;
+
+            ///////////////////
+            //// Rotate around origin
+            //////////////////
+            double xn = XC * Math.Cos(ang) - YC * Math.Sin(ang);
+            double Yn = XC * Math.Sin(ang) + YC * Math.Cos(ang);
+
+            XC = (float)xn;
+            YC = (float)Yn;
+
+
+            ///////////////////
+            //// undo the translation
+            //////////////////
+            XC += xRef;
+            YC += yRef;
+
+            //return L;
+        }
+
     }
 }
