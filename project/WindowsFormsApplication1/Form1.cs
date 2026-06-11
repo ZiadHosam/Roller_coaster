@@ -288,7 +288,7 @@ namespace WindowsFormsApplication1
                     c.end = 360;
                     c.XC = (int)CurrPntX - 3;
                     c.Rad = 60;
-                    c.YC = (int)CurrPntY - c.Rad - 2;
+                    c.YC = (int)CurrPntY - c.Rad - 3;
                     c.dir = -1;
                     //Circles.Add(c);
                     Parts.Add(p);
@@ -372,18 +372,8 @@ namespace WindowsFormsApplication1
                         }
                         else if (p.i == 1)
                         {
-                            if (Circles.Count > 0)
-                            {
-                                if (Circles[Circles.Count - 1].Rad > 60)
-                                {
-                                    Circles[Circles.Count - 1].YC += 20;
-                                    Circles[Circles.Count - 1].Rad -= 20;
-                                }
-                                else
-                                {
-                                    Circles.RemoveAt(Circles.Count - 1);
-                                }
-                            }
+                            Circle c = p.circ;
+                            c.Rotate(CurrPntX, CurrPntY, +0.35f);
                         }
                         else if (p.i == 2)
                         {
