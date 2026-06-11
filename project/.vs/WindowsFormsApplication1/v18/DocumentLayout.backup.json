@@ -11,12 +11,12 @@
       "RelativeMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|solutionrelative:windowsformsapplication1\\circle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|D:\\anythinggit\\GX_proj\\project\\windowsformsapplication1\\dda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|solutionrelative:windowsformsapplication1\\dda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|D:\\anythinggit\\GX_proj\\project\\windowsformsapplication1\\beziercurve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|solutionrelative:windowsformsapplication1\\beziercurve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|D:\\anythinggit\\GX_proj\\project\\windowsformsapplication1\\dda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{27B9FD6C-E8D9-4B2C-A12A-97B51C261C82}|WindowsFormsApplication1\\WindowsFormsApplication1.csproj|solutionrelative:windowsformsapplication1\\dda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -37,6 +37,10 @@
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs",
@@ -44,14 +48,14 @@
               "RelativeDocumentMoniker": "WindowsFormsApplication1\\Form1.cs",
               "ToolTip": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\Form1.cs*",
               "RelativeToolTip": "WindowsFormsApplication1\\Form1.cs*",
-              "ViewState": "AgIAAGQBAAAAAAAAAAAkwHkBAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAHQCAAAAAAAAAADwv4MCAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T16:02:50.567Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "DDA.cs",
               "DocumentMoniker": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\DDA.cs",
               "RelativeDocumentMoniker": "WindowsFormsApplication1\\DDA.cs",
@@ -64,13 +68,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "BezierCurve.cs",
               "DocumentMoniker": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\BezierCurve.cs",
               "RelativeDocumentMoniker": "WindowsFormsApplication1\\BezierCurve.cs",
               "ToolTip": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\BezierCurve.cs",
               "RelativeToolTip": "WindowsFormsApplication1\\BezierCurve.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAswIoAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAAAIoAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T16:02:50.707Z",
               "EditorCaption": ""
@@ -83,7 +87,7 @@
               "RelativeDocumentMoniker": "WindowsFormsApplication1\\Circle.cs",
               "ToolTip": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\Circle.cs",
               "RelativeToolTip": "WindowsFormsApplication1\\Circle.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAADUAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAADUAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-11T16:02:50.707Z",
               "EditorCaption": ""

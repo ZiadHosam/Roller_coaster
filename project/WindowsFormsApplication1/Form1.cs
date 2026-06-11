@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace WindowsFormsApplication1
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         float cur_t = 0f, CurveSpeed, stretchval;
-        int cur_theta = 270, CircleSpeed;
+        int cur_theta = -1,theta_end, CircleSpeed;
         PointF carPoint;
         int indexCurrDragNode = -1, indexCurrNode = -1;
         Bitmap off;
@@ -117,13 +118,28 @@ namespace WindowsFormsApplication1
                 else if (Parts[car.currline].i == 1)
                 {
                     Circle c = Parts[car.currline].circ;
+                    float dist, min_dist = 99999;
+                    if(cur_theta == -1)
+                    {
+                        for(int i = 0; i < 360; i++)
+                        {
+                            PointF tmp = c.Getnextpoint(i);
+                            dist = (float)Math.Sqrt(Math.Pow((tmp.X - (car.x+car.w)), 2) + Math.Pow((tmp.Y - (car.y+car.h)), 2));
+                            if(dist< min_dist)
+                            {
+                                min_dist = dist;
+                                cur_theta = i;
+                            }
+                        }
+                        theta_end = cur_theta + 360;
+                    }
                     cur_theta += CircleSpeed;
                     PointF pnt = c.Getnextpoint(cur_theta);
                     car.x = pnt.X - car.w;
                     car.y = pnt.Y - car.h;
-                    if (cur_theta >= 630)
+                    if (cur_theta >= theta_end)
                     {
-                        cur_theta = 270;
+                        cur_theta = -1;
                         car.currline++;
                         if (car.currline >= Parts.Count)
                         {
@@ -625,7 +641,7 @@ namespace WindowsFormsApplication1
             //obj.DrawCurve(g);
 
             g.DrawImage(car.img, car.x, car.y, car.w, car.h);
-
+            g.FillEllipse(Brushes.Black, car.x+car.w, car.y+car.h, 15, 15);
 
 
 
