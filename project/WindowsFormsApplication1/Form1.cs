@@ -9,7 +9,8 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public abstract class type {
+    public abstract class type
+    {
         public int i;
     }
 
@@ -21,7 +22,7 @@ namespace WindowsFormsApplication1
         public BezierCurve curve;
         public void CalcNextPoint()
         {
-            if(i == 0)
+            if (i == 0)
             {
                 line.CalcNextPoint();
             }
@@ -42,8 +43,8 @@ namespace WindowsFormsApplication1
     {
         public float x;
         public float y = -100;
-        public float w = 30;
-        public float h = 30;
+        public float w = 150;
+        public float h = 50;
         public int currline = 0;
         public Bitmap img;
     }
@@ -52,7 +53,7 @@ namespace WindowsFormsApplication1
         float CurrPntX, PntXreset;
         float CurrPntY, PntYreset;
         int DefaultLineLen;
-        int flag = 0, scroll_flag = 0, flagstart = 0,ftest = 0, flagurgway = 0, flag_type = 0;
+        int flag = 0, scroll_flag = 0, flagstart = 0, ftest = 0, flagurgway = 0, flag_type = 0;
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
@@ -61,10 +62,15 @@ namespace WindowsFormsApplication1
         int indexCurrDragNode = -1, indexCurrNode = -1;
         Bitmap off;
         Bitmap background;
+        Bitmap background2;
+        Bitmap background3;
         float count = 0;
         Timer tt = new Timer();
 
+
+        int maxScrollX;
         Ccar car = new Ccar();
+        int carspeed = 10;
         List<part> Parts = new List<part>();
         //List<part> Lines = new List<part>();
         List<Circle> Circles = new List<Circle>();
@@ -90,7 +96,7 @@ namespace WindowsFormsApplication1
                 if (Parts[car.currline].i == 0)
                 {
                     DDA l = Parts[car.currline].line;
-                    l.CalcNextPoint();
+                    l.CalcNextPoint(carspeed);
 
                     car.x = l.cx - car.w;
                     car.y = l.cy - car.h;
@@ -137,7 +143,7 @@ namespace WindowsFormsApplication1
                 }
 
             }
-            if(ftest == 1)
+            if (ftest == 1)
             {
                 Yshow += scrollSpeed;
             }
@@ -147,19 +153,23 @@ namespace WindowsFormsApplication1
 
         void Form1_Load(object sender, EventArgs e)
         {
-            offW = ClientSize.Width * 2;
-            offH = ClientSize.Height * 2;
+            offW = ClientSize.Width * 3;
+            offH = ClientSize.Height;
             off = new Bitmap(offW, offH);
             background = new Bitmap("bg3.jpg");
-            car.img = new Bitmap("bg4.jpg");
+            background2 = new Bitmap("bg2.jpg");
+            background3 = new Bitmap("bg4.jpg");
+            car.img = new Bitmap("train.jpg");
+            car.img.MakeTransparent(Color.White);
 
             Xshow = 0;
-            Yshow = -ClientSize.Height;
+            Yshow = 0;
+            maxScrollX = -2 * ClientSize.Width;
             scrollSpeed = 20;
             CurveSpeed = 0.1f;
             stretchval = 10;
             PntXreset = 0;
-            PntYreset = (int)(ClientSize.Height * 1.5);
+            PntYreset = (int)(ClientSize.Height * 0.5);
             CurrPntX = PntXreset;
             CurrPntY = PntYreset;
             DefaultLineLen = 100;
@@ -368,6 +378,17 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
+                if (e.KeyCode == Keys.Z)
+                {
+                    carspeed -= 5;
+                    CurveSpeed -= 0.03f;
+                }
+                if (e.KeyCode == Keys.X)
+                {
+                    carspeed += 5;
+                    CurveSpeed += 0.03f;
+                }
+
                 DrawDubb(this.CreateGraphics());
             }
             else
@@ -377,7 +398,7 @@ namespace WindowsFormsApplication1
                     flagstart = 0;
                     flagurgway = 0;
                 }
-                if(flag_type == 1)
+                if (flag_type == 1)
                 {
                     switch (e.KeyCode)
                     {
@@ -410,6 +431,17 @@ namespace WindowsFormsApplication1
                             break;
                     }
                 }
+                if (e.KeyCode == Keys.Z)
+                {
+                    carspeed -= 5;
+                    CurveSpeed -= 0.03f;
+
+                }
+                if (e.KeyCode == Keys.X)
+                {
+                    carspeed += 5;
+                    CurveSpeed += 0.03f;
+                }
                 DrawDubb(this.CreateGraphics());
             }
         }
@@ -419,7 +451,7 @@ namespace WindowsFormsApplication1
         {
             BezierCurve c = new BezierCurve();
             c.SetControlPoint(new Point((int)CurrPntX, (int)CurrPntY));
-            c.SetControlPoint(new Point((int)CurrPntX + (DefaultLineLen/2), (int)CurrPntY - (DefaultLineLen/2)));
+            c.SetControlPoint(new Point((int)CurrPntX + (DefaultLineLen / 2), (int)CurrPntY - (DefaultLineLen / 2)));
             c.SetControlPoint(new Point((int)CurrPntX + DefaultLineLen, (int)CurrPntY));
             return c;
         }
@@ -435,10 +467,10 @@ namespace WindowsFormsApplication1
 
                 case 1:
                     int tmpindex = -1;
-                    for(int i = 0; i< Parts.Count; i++)
+                    for (int i = 0; i < Parts.Count; i++)
                     {
                         part p = Parts[i];
-                        if(p.i == 2)
+                        if (p.i == 2)
                         {
                             int x = e.X - Xshow;
                             int y = e.Y - Yshow;
@@ -474,7 +506,7 @@ namespace WindowsFormsApplication1
                         int y = e.Y - Yshow;
                         BezierCurve c = p.curve;
                         c.ModifyCtrlPoint(indexCurrDragNode, x, y);
-                        if(indexCurrNode == Parts.Count - 1)
+                        if (indexCurrNode == Parts.Count - 1)
                             update_line(x, y);
                     }
                 }
@@ -484,14 +516,17 @@ namespace WindowsFormsApplication1
             {
                 int Xnew = e.X - Xold;
                 int Ynew = e.Y - Yold;
-                if (Xshow + Xnew <= 0)
-                    Xshow += Xnew;
-                else
+                Xshow += Xnew;
+                if (Xshow > 0)
                     Xshow = 0;
-                if (Yshow + Ynew >= -ClientSize.Height)
-                    Yshow += Ynew;
-                else
-                    Yshow = -ClientSize.Height;
+                if (Xshow < maxScrollX)
+                    Xshow = maxScrollX;
+
+                //Yshow += Ynew;
+                //if (Yshow > 0)
+                //    Yshow = 0;
+                //if (Yshow < ClientSize.Height)
+                //    Yshow = ClientSize.Height;
                 Xold = e.X;
                 Yold = e.Y;
                 DrawDubb(this.CreateGraphics());
@@ -506,6 +541,15 @@ namespace WindowsFormsApplication1
             {
                 flag = 0;
                 //indexCurrDragNode = -1;
+                part p = Parts[Parts.Count - 1];
+
+                if (p.i == 2 && p.curve != null)
+                {
+                    float x = p.curve.ControlPoints[2].X;
+                    float y = p.curve.ControlPoints[2].Y;
+
+                    update_line(x, y);
+                }
                 DrawDubb(this.CreateGraphics());
             }
             scroll_flag = 0;
@@ -517,9 +561,43 @@ namespace WindowsFormsApplication1
         {
             g.Clear(Color.LightCyan);
             //g.Clear(Color.White);
+            g.DrawImage(background, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            g.DrawImage(background2, ClientSize.Width, 0, this.ClientSize.Width, this.ClientSize.Height);
+            g.DrawImage(background3, ClientSize.Width * 2, 0, this.ClientSize.Width, this.ClientSize.Height);
 
-            g.DrawImage(background, 0, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
-            g.DrawImage(background, ClientSize.Width, ClientSize.Height, this.ClientSize.Width, this.ClientSize.Height);
+
+            //carPoint = obj.CalcCurvePointAtTime(my_t_inForm);
+            //g.FillEllipse(Brushes.SkyBlue, carPoint.X - 15, carPoint.Y - 15, 30, 30);
+            int legendX = ClientSize.Width - 220 - Xshow;
+            int legendY = 10 - Yshow;
+            int lineH = 28;
+            g.FillRectangle(new SolidBrush(Color.FromArgb(170, 0, 30, 60)), legendX - 10, legendY - 5, 210, 316);
+            g.DrawRectangle(new Pen(Color.DeepSkyBlue, 1), legendX - 10, legendY - 5, 210, 316);
+            Font keyFont = new Font("Arial", 11, FontStyle.Bold);
+            Font descFont = new Font("Arial", 11, FontStyle.Regular);
+            string[][] items = new string[][] {
+            new string[] { "    1", "New Line" },
+            new string[] { "    2", "New Circle" },
+            new string[] { "    3", "New Curve" },
+            new string[] { "    F", "Start" },
+            new string[] { "    T", "Stop" },
+            new string[] { "    ← ", "Delete Last" },
+            new string[] { "   J/L", "Rotate" },
+            new string[] { "   Z/X", "Speed -/+" },
+            new string[] { "   I/K", "Radius -/+" },
+            new string[] { "CTRL", "Edit Mode" },
+            new string[] { "   A/D", "Scroll" },
+            };
+            for (int i = 0; i < items.Length; i++)
+            {
+                g.FillRectangle(new SolidBrush(Color.FromArgb(255, 0, 60, 120)), legendX, legendY + i * lineH, 55, 22);
+                g.DrawRectangle(new Pen(Color.DeepSkyBlue, 1), legendX, legendY + i * lineH, 55, 22);
+                g.DrawString(items[i][0], keyFont, Brushes.Cyan, legendX + 3, legendY + i * lineH + 3);
+                g.DrawString(items[i][1], descFont, Brushes.LightCyan, legendX + 63, legendY + i * lineH + 3);
+            }
+
+
+           
             //obj.DrawCurve(g);
 
             g.DrawImage(car.img, car.x, car.y, car.w, car.h);
@@ -534,7 +612,7 @@ namespace WindowsFormsApplication1
                 {
                     DDA l = Parts[i].line;
                     g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
-                    if(flag_type == 1)
+                    if (flag_type == 1)
                     {
                         g.FillEllipse(new SolidBrush(Color.Black),
                                 l.Xst - 5,
@@ -555,14 +633,14 @@ namespace WindowsFormsApplication1
 
                 }
             }
+
             for (int i = 0; i < Circles.Count; i++)
             {
                 Circles[i].Drawcircle(g);
             }
-            g.DrawImage(off, 0 - Xshow, 0 - Yshow, 200, 200);
-            carPoint = obj.CalcCurvePointAtTime(my_t_inForm);
-            g.FillEllipse(Brushes.SkyBlue, carPoint.X - 15, carPoint.Y - 15, 30, 30);
-            g.DrawString("right:newl,left:deletel//c:newc,x:shrinkc,v:enlargec//e:rotatel down,r:rotatel up//// s:start " + CurrPntX, new Font("System", 20), Brushes.White, 10, 10);
+            g.DrawImage(off, 0 - Xshow, 0 - Yshow, ClientSize.Width/4+100, 200);
+            g.DrawString("Mini Map", new Font("Arial", 8, FontStyle.Bold), Brushes.White, 0 - Xshow, 0 - Yshow);
+
         }
         private void Form1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {

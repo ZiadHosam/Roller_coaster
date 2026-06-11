@@ -50,6 +50,7 @@ D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\Windows
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+<<<<<<< HEAD
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
@@ -59,3 +60,14 @@ D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFor
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
 D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+=======
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.AssemblyReference.cache
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+C:\Users\Ziad\Documents\GitHub\Roller_coaster\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+>>>>>>> 82c6836b940b26053775b3d0bd2abcb9f91a2cff

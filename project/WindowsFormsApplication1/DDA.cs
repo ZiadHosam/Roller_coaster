@@ -12,7 +12,7 @@ namespace WindowsFormsApplication1
         public float Xend, Yend;
         public float dy, dx, m;
         public float cx, cy;
-        int speed = 10;
+        //int speed = 10;
         public bool travel;
         public void calc()
         {
@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1
             cy = Yst;
             travel = true;
         }
-        public bool CalcNextPoint()
+        public bool CalcNextPoint(int speed)
         {
             
             if (Math.Abs(dx) > Math.Abs(dy))
