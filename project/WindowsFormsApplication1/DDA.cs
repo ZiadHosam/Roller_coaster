@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
     {
         public float Xst, Yst;
         public float Xend, Yend;
-        float dy, dx, m;
+        public float dy, dx, m;
         public float cx, cy;
         int speed = 10;
         public bool travel;

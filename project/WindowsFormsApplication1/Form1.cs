@@ -56,7 +56,7 @@ namespace WindowsFormsApplication1
         int Xshow, Yshow, Xold, Yold, offW, offH, scrollSpeed;
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
-        float cur_t = 0f, CurveSpeed;
+        float cur_t = 0f, CurveSpeed, stretchval;
         PointF carPoint;
         int indexCurrDragNode = -1, indexCurrNode = -1;
         Bitmap off;
@@ -157,6 +157,7 @@ namespace WindowsFormsApplication1
             Yshow = -ClientSize.Height;
             scrollSpeed = 20;
             CurveSpeed = 0.1f;
+            stretchval = 10;
             PntXreset = 0;
             PntYreset = (int)(ClientSize.Height * 1.5);
             CurrPntX = PntXreset;
@@ -218,7 +219,7 @@ namespace WindowsFormsApplication1
 
                     update_line(ptrav.Xend, ptrav.Yend);
                 }
-                if (e.KeyCode == Keys.Left)
+                if (e.KeyCode == Keys.J)
                 {
                     if (Parts.Count != 0)
                     {
@@ -255,33 +256,35 @@ namespace WindowsFormsApplication1
                     ptrav.Rad = 120;
                     Circles.Add(ptrav);
                 }
-                if (e.KeyCode == Keys.I)
+                if (e.KeyCode == Keys.L)
                 {
-                    if (Circles.Count > 0)
+                    if(Parts.Count > 0)
                     {
-                        if (Circles[Circles.Count - 1].Rad > 60)
+                        part p = Parts[Parts.Count - 1];
+                        if(p.i == 0)
                         {
-                            Circles[Circles.Count - 1].YC += 20;
-                            Circles[Circles.Count - 1].Rad -= 20;
-                        }
-                        else
-                        {
-                            Circles.RemoveAt(Circles.Count - 1);
-                        }
-                    }
-                }
-                if (e.KeyCode == Keys.K)
-                {
-                    if (Circles.Count > 0)
-                    {
-                        if (Circles[Circles.Count - 1].Rad < 200)
-                        {
-                            Circles[Circles.Count - 1].YC -= 20;
-                            Circles[Circles.Count - 1].Rad += 20;
+                            DDA l = p.line;
+                            l.Xend += stretchval;
+                            //l.Yend += l.dx;
+                            l.calc();
+                            update_line(l.Xend, l.Yend);
                         }
                     }
                 }
                 if (e.KeyCode == Keys.J)
+                {
+                    //if (Parts.Count > 0)
+                    //{
+                    //    part p = Parts[Parts.Count - 1];
+                    //    if (p.i == 0)
+                    //    {
+                    //        DDA l = p.line;
+                    //        l.Xend = stretchval;
+                    //        update_line(l.Xend, l.Yend);
+                    //    }
+                    //}
+                }
+                if (e.KeyCode == Keys.I)
                 {
                     if (Parts.Count > 0)
                     {
@@ -291,6 +294,17 @@ namespace WindowsFormsApplication1
                             DDA l = p.line;
                             l.Rotate(l, l.Xst, l.Yst, -0.35f);
                             update_line(l.Xend, l.Yend);
+                        }
+                        else if (p.i == 1)
+                        {
+                            if (Circles.Count > 0)
+                            {
+                                if (Circles[Circles.Count - 1].Rad < 200)
+                                {
+                                    Circles[Circles.Count - 1].YC -= 20;
+                                    Circles[Circles.Count - 1].Rad += 20;
+                                }
+                            }
                         }
                         else if (p.i == 2)
                         {
@@ -302,7 +316,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-                if (e.KeyCode == Keys.L)
+                if (e.KeyCode == Keys.K)
                 {
                     if (Parts.Count > 0)
                     {
@@ -312,6 +326,21 @@ namespace WindowsFormsApplication1
                             DDA l = p.line;
                             l.Rotate(l, l.Xst, l.Yst, +0.35f);
                             update_line(l.Xend, l.Yend);
+                        }
+                        else if (p.i == 1)
+                        {
+                            if (Circles.Count > 0)
+                            {
+                                if (Circles[Circles.Count - 1].Rad > 60)
+                                {
+                                    Circles[Circles.Count - 1].YC += 20;
+                                    Circles[Circles.Count - 1].Rad -= 20;
+                                }
+                                else
+                                {
+                                    Circles.RemoveAt(Circles.Count - 1);
+                                }
+                            }
                         }
                         else if (p.i == 2)
                         {

@@ -50,3 +50,12 @@ D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\Windows
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
 D:\anythinggit\New folder\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.AssemblyReference.cache
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.exe
+D:\anythinggit\GX_proj\project\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.pdb
