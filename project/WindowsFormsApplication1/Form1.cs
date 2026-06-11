@@ -641,7 +641,7 @@ namespace WindowsFormsApplication1
             //obj.DrawCurve(g);
 
             g.DrawImage(car.img, car.x, car.y, car.w, car.h);
-            g.FillEllipse(Brushes.Black, car.x+car.w, car.y+car.h, 15, 15);
+            //g.FillEllipse(Brushes.Black, car.x+car.w, car.y+car.h, 15, 15);
 
 
 
