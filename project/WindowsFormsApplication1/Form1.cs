@@ -58,6 +58,7 @@ namespace WindowsFormsApplication1
         BezierCurve obj = new BezierCurve();
         float my_t_inForm = 0.5f;
         float cur_t = 0f, CurveSpeed, stretchval;
+        int cur_theta = 270, CircleSpeed;
         PointF carPoint;
         int indexCurrDragNode = -1, indexCurrNode = -1;
         Bitmap off;
@@ -112,6 +113,25 @@ namespace WindowsFormsApplication1
                         }
                     }
 
+                }
+                else if (Parts[car.currline].i == 1)
+                {
+                    Circle c = Parts[car.currline].circ;
+                    cur_theta += CircleSpeed;
+                    PointF pnt = c.Getnextpoint(cur_theta);
+                    car.x = pnt.X - car.w;
+                    car.y = pnt.Y - car.h;
+                    if (cur_theta >= 630)
+                    {
+                        cur_theta = 270;
+                        car.currline++;
+                        if (car.currline >= Parts.Count)
+                        {
+                            flagstart = 0;
+                            flagurgway = 0;
+                        }
+                    }
+
                     //for (int i = 0; i < Circles.Count; i++)
                     //{
                     //    if (car.x >= Circles[i].XC)
@@ -120,7 +140,6 @@ namespace WindowsFormsApplication1
                     //        car.x = Circles[i].XC;
                     //        car.y = Circles[i].YC;
                     //    }
-
                     //}
                 }
                 else if (Parts[car.currline].i == 2)
@@ -168,6 +187,7 @@ namespace WindowsFormsApplication1
             maxScrollX = -2 * ClientSize.Width;
             scrollSpeed = 20;
             CurveSpeed = 0.1f;
+            CircleSpeed = 15;
             stretchval = 10;
             PntXreset = 0;
             PntYreset = (int)(ClientSize.Height * 0.5);
@@ -259,13 +279,22 @@ namespace WindowsFormsApplication1
                 }
                 if (e.KeyCode == Keys.D2)
                 {
-                    Circle ptrav = new Circle();
-                    ptrav.st = 0;
-                    ptrav.end = 360;
-                    ptrav.XC = (int)CurrPntX;
-                    ptrav.YC = (int)CurrPntY - 120;
-                    ptrav.Rad = 120;
-                    Circles.Add(ptrav);
+                    part p = new part();
+                    p.i = 1;
+                    //p.curve = create_curve();
+                    Circle c = new Circle();
+                    p.circ = c;
+                    c.st = 0;
+                    c.end = 360;
+                    c.XC = (int)CurrPntX;
+                    c.Rad = 60;
+                    c.YC = (int)CurrPntY - c.Rad - 3;
+                    c.dir = -1;
+                    //Circles.Add(c);
+                    Parts.Add(p);
+                    //float x = p.curve.ControlPoints[2].X;
+                    //float y = p.curve.ControlPoints[2].Y;
+                    //update_line(x, y);
                 }
                 if (e.KeyCode == Keys.L)
                 {
@@ -460,6 +489,7 @@ namespace WindowsFormsApplication1
             return c;
         }
 
+        
 
         private void Form1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -496,6 +526,7 @@ namespace WindowsFormsApplication1
             Yold = e.Y;
             DrawDubb(this.CreateGraphics());
         }
+
 
         private void Form1_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
@@ -596,6 +627,45 @@ namespace WindowsFormsApplication1
             g.DrawImage(background, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
             g.DrawImage(background2, ClientSize.Width, 0, this.ClientSize.Width, this.ClientSize.Height);
             g.DrawImage(background3, ClientSize.Width * 2, 0, this.ClientSize.Width, this.ClientSize.Height);
+            
+           
+            //obj.DrawCurve(g);
+
+            g.DrawImage(car.img, car.x, car.y, car.w, car.h);
+
+
+
+
+            for (int i = 0; i < Parts.Count; i++)
+            {
+                Pen pen = new Pen(Color.White, 4);
+                if (Parts[i].i == 0)
+                {
+                    DDA l = Parts[i].line;
+                    g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
+                    if (flag_type == 1)
+                    {
+                        g.FillEllipse(new SolidBrush(Color.Black),
+                                l.Xst - 5,
+                                l.Yst - 5, 10, 10);
+                        g.FillEllipse(new SolidBrush(Color.Black),
+                                l.Xend - 5,
+                                l.Yend - 5, 10, 10);
+                    }
+                }
+                else if (Parts[i].i == 1)
+                {
+                    Circle c = Parts[i].circ;
+                    c.Drawcircle(g);
+                }
+                else if (Parts[i].i == 2)
+                {
+                    BezierCurve c = Parts[i].curve;
+                    c.DrawCurve(g, flag_type);
+
+                }
+            }
+
             float minmap_w = ClientSize.Width * 3 / 10;
             float minmap_h = ClientSize.Height / 7;
             float minmap_x = ClientSize.Width - Xshow - minmap_w;
@@ -635,47 +705,6 @@ namespace WindowsFormsApplication1
             }
 
 
-           
-            //obj.DrawCurve(g);
-
-            g.DrawImage(car.img, car.x, car.y, car.w, car.h);
-
-
-
-
-            for (int i = 0; i < Parts.Count; i++)
-            {
-                Pen pen = new Pen(Color.White, 4);
-                if (Parts[i].i == 0)
-                {
-                    DDA l = Parts[i].line;
-                    g.DrawLine(pen, l.Xst, l.Yst, l.Xend, l.Yend);
-                    if (flag_type == 1)
-                    {
-                        g.FillEllipse(new SolidBrush(Color.Black),
-                                l.Xst - 5,
-                                l.Yst - 5, 10, 10);
-                        g.FillEllipse(new SolidBrush(Color.Black),
-                                l.Xend - 5,
-                                l.Yend - 5, 10, 10);
-                    }
-                }
-                else if (Parts[i].i == 1)
-                {
-
-                }
-                else if (Parts[i].i == 2)
-                {
-                    BezierCurve c = Parts[i].curve;
-                    c.DrawCurve(g, flag_type);
-
-                }
-            }
-
-            for (int i = 0; i < Circles.Count; i++)
-            {
-                Circles[i].Drawcircle(g);
-            }
             //g.DrawImage(off, 0 - Xshow, 0 - Yshow, ClientSize.Width/4+100, 200);
 
         }
