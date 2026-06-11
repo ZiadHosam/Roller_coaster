@@ -638,7 +638,8 @@ namespace WindowsFormsApplication1
             {
                 Circles[i].Drawcircle(g);
             }
-            g.DrawImage(off, 0 - Xshow, 0 - Yshow, ClientSize.Width/4+100, 200);
+            //g.DrawImage(off, 0 - Xshow, 0 - Yshow, ClientSize.Width/4+100, 200);
+            g.DrawImage(off, 0 - Xshow, 0 - Yshow, ClientSize.Width/5, ClientSize.Height / 5);
             g.DrawString("Mini Map", new Font("Arial", 8, FontStyle.Bold), Brushes.White, 0 - Xshow, 0 - Yshow);
 
         }

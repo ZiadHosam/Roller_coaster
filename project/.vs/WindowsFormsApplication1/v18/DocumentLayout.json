@@ -46,11 +46,11 @@
               "Title": "Form1.cs",
               "DocumentMoniker": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\Form1.cs",
               "RelativeDocumentMoniker": "WindowsFormsApplication1\\Form1.cs",
-              "ToolTip": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\Form1.cs",
-              "RelativeToolTip": "WindowsFormsApplication1\\Form1.cs",
-              "ViewState": "AgIAAMcBAAAAAAAAAAAAAN0BAAAuAAAAAAAAAA==",
+              "ToolTip": "D:\\anythinggit\\GX_proj\\project\\WindowsFormsApplication1\\Form1.cs*",
+              "RelativeToolTip": "WindowsFormsApplication1\\Form1.cs*",
+              "ViewState": "AgIAAHMCAAAAAAAAAAAAwIECAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T05:27:31.816Z",
+              "WhenOpened": "2026-06-11T16:02:50.567Z",
               "EditorCaption": ""
             },
             {
@@ -63,8 +63,7 @@
               "RelativeToolTip": "WindowsFormsApplication1\\DDA.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAkwDwAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T05:27:31.827Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T16:02:50.707Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "WindowsFormsApplication1\\BezierCurve.cs",
               "ViewState": "AgIAAFwAAAAAAAAAAAAewGgAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T05:27:31.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T16:02:50.707Z"
             },
             {
               "$type": "Document",
@@ -89,7 +87,7 @@
               "RelativeToolTip": "WindowsFormsApplication1\\Circle.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAADwvyAAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T05:27:31.831Z"
+              "WhenOpened": "2026-06-11T16:02:50.707Z"
             }
           ]
         },
